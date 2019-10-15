@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PayTapApp</string>
+    <string name="otpVerification">Enter 4 digit Verification Code that sent to </string>
+</resources>
