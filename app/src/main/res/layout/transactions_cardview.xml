@@ -20,28 +20,35 @@
         android:id="@+id/transaction_cardView_paymentID"
         android:text="paymentID"
         android:textSize="20sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <TextView
         android:layout_marginStart="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/transaction_cardView_paymentAmount"
         android:text="paymentAmount"
         android:textSize="20sp"/>
 
+
     <TextView
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="viewEnd"
         android:id="@+id/transaction_cardView_paymentType"
-        android:text="paymentTime"
+        android:text="paymentType"
         android:textSize="20sp"/>
+    </LinearLayout>
 
     <TextView
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/transaction_cardView_paymentTime"
-        android:text="paymentType"
+        android:text="paymentTime"
         android:textSize="20sp"/>
 
 
