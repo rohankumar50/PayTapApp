@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,6 +38,8 @@ import static com.vastgk.paytap.OTPVerify.PREFERENCE_FILE_KEY;
 import static com.vastgk.paytap.OTPVerify.USERID;
 
 public class Dashboard extends AppCompatActivity {
+    RequestQueue queue;
+
     CircularImageView profileImgView;
     TextView balancetxtview,nametv;
     BottomNavigationView bottomNavigationView;
@@ -44,6 +47,8 @@ public class Dashboard extends AppCompatActivity {
     private RecyclerView recentTransactions;
     private  String mMobileNumber;
     ArrayList<TransactionsModel> transactionlist=new ArrayList<>();
+    private String TAG="DEBUGDASHBOARD";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +69,9 @@ public class Dashboard extends AppCompatActivity {
             Intent intent=new Intent(Dashboard.this,TransactionHistory.class);
             startActivity(intent);
         });
-    loadBalance();
-
+    queue=Volley.newRequestQueue(this);
         fetchrecentTransactions();
+
 
         // --------------------- Bottom Nanigation ---------------------------
 
@@ -96,7 +101,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void loadBalance() {
-        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
         String url=String.format("http://api.nixbymedia.com/paytap/users_single.php?username=%s",mMobileNumber);
         Log.d("DEBUGDASHBOARD", "loadBalance:url"+url);
         StringRequest stringRequest=new StringRequest(Request.Method.GET,url,response -> {
@@ -122,37 +127,48 @@ public class Dashboard extends AppCompatActivity {
         },error -> {
             Toast.makeText(this, "Unable to Fetch Balance", Toast.LENGTH_SHORT).show();
         });
-        requestQueue.add(stringRequest);
+        queue.add(stringRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+loadBalance();
+fetchrecentTransactions();
     }
 
     private void fetchrecentTransactions() {
         Toast.makeText(this, "Fetching Transactions", Toast.LENGTH_SHORT).show();
-        RequestQueue queue=Volley.newRequestQueue(this);
+        RequestQueue queue= Volley.newRequestQueue(this);
         String url="http://api.nixbymedia.com/paytap/transactions_all.php?username=";
         SharedPreferences sharedPreferences=getSharedPreferences(PREFERENCE_FILE_KEY,MODE_PRIVATE);
-        String mobile=sharedPreferences.getString(USERID,"null");
-        StringRequest request=new StringRequest(Request.Method.GET,url+mobile,response->{
+        String mobile=sharedPreferences.getString(USERID,"null@TranHistory");
+        StringRequest request=new StringRequest(Request.Method.GET,url+mobile, response->{
             try {
-
                 transactionlist.clear();
                 JSONObject jsonObject=new JSONObject(response);
+                Log.d(TAG, "fetchrecentTransactions: "+jsonObject.toString());
                 if (jsonObject.has("error")){
-                if (jsonObject.getJSONArray("error").getJSONObject(0).getString("status").equals("404"))
-                {
-                    Toast.makeText(this, "No Transaction Exists", Toast.LENGTH_SHORT).show();
-                    TransactionsModel td=new TransactionsModel("No transaction Exits For this user ","","","","","");
-                    transactionlist.add(td);
-                    setRecentTransactions(transactionlist);
+                    if (jsonObject.getJSONArray("error").getJSONObject(0).getString("status").equals("404"))
+                    {
+                        Toast.makeText(this, "No Transaction Exists", Toast.LENGTH_SHORT).show();
+                        TransactionsModel td=new TransactionsModel("No transaction Exits For this user ","","","","","");
+                        transactionlist.add(td);
+                        setRecentTransactions(transactionlist);
 
-                }}
+                    }}
+                Toast.makeText(this, "Loading Transactions", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "fetchrecentTransactions: Loading Transactions now");
                 JSONArray transactions=jsonObject.getJSONArray("transactions");
-                int limit=transactions.length()>3?3:transactions.length();
+                Log.d(TAG, "Jsonarray: "+transactions.length());
+                int limit=transactions.length();
                 for (int i=0;i<limit;i++)
                 {
                     JSONObject jo=transactions.getJSONObject(i);
+                    Log.d(TAG, "Inside Transactions: "+jo.toString());
                     TransactionsModel transaction=new TransactionsModel(jo.getString("id"),
                             jo.getString("datetime"),jo.getString("amount"),jo.getString("type"),jo.getString("vendorid"),"PayTap"
-                            );
+                    );
                     transactionlist.add(transaction);
                 }
 
@@ -176,9 +192,8 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void setRecentTransactions(ArrayList<TransactionsModel> list) {
-        TransactionsAdapter adapter=new TransactionsAdapter(list);
+        TransactionsAdapter adapter=new TransactionsAdapter(list, list.size());
         recentTransactions.setLayoutManager(new LinearLayoutManager(this));
-        recentTransactions.setHasFixedSize(true);
         recentTransactions.setAdapter(adapter);
     }
 

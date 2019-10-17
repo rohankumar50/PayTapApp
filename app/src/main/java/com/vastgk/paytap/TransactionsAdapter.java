@@ -9,15 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.ViewHolder> {
     ArrayList<TransactionsModel> list;
-
-    public TransactionsAdapter(ArrayList<TransactionsModel> list) {
+int limit;
+    public TransactionsAdapter(ArrayList<TransactionsModel> list, int i) {
         this.list = list;
+        Collections.reverse(this.list);
+limit=i;
     }
 
     @NonNull
@@ -38,7 +39,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
             holder.type.setTextColor(Color.rgb(00,100,0));
             holder.amount.setTextColor(Color.rgb(00,100,0));
         }else
-        {
+        {            holder.type.setTextColor(Color.rgb(00,100,0));
+
             holder.amount.setTextColor(Color.rgb(255,0,0));
 
         }
@@ -47,7 +49,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return limit;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -90,7 +90,7 @@ if (jsonObject.has("error")){
     }
 
     private void setRecentTransactions(ArrayList<TransactionsModel> list) {
-        TransactionsAdapter adapter=new TransactionsAdapter(list);
+        TransactionsAdapter adapter=new TransactionsAdapter(list, list.size());
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
        transactionsRecyclerView.setHasFixedSize(true);
         transactionsRecyclerView.setAdapter(adapter);
