@@ -1,6 +1,7 @@
 package com.vastgk.paytap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -34,6 +35,7 @@ public class Dashboard extends AppCompatActivity {
     CircularImageView profileImgView;
     TextView tv_fullTransaction;
     BottomNavigationView bottomNavigationView;
+    public static int NFC_Request_code=7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class Dashboard extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.bottom_navigation_Dashboard_nfc:
                         Toast.makeText(Dashboard.this, "NfC", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(Dashboard.this,NfcRead.class);
+                        startActivityForResult(intent,NFC_Request_code);
+
                         break;
                     case R.id.bottom_navigation_Dashboard_scan:
                         Toast.makeText(Dashboard.this, "Scan", Toast.LENGTH_SHORT).show();
@@ -92,5 +97,15 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==NFC_Request_code)
+        {
+            if (requestCode==RESULT_OK)
+            {
+                //TODO Do something
+            }
+        }
+    }
 }
