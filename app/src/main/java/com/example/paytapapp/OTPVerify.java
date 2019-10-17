@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ public class OTPVerify extends AppCompatActivity {
         otp4=findViewById(R.id.OTP4);
 
         editTextSwitcher();
+        editTextBackSpaceListner();
 
         btn_otpverify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +38,42 @@ public class OTPVerify extends AppCompatActivity {
               //  startActivity(intent);
             }
         });
+    }
+
+    private void editTextBackSpaceListner() {
+       otp2.setOnKeyListener((view,keycode,event)->{
+           if(keycode== KeyEvent.KEYCODE_DEL) {
+               //this is for backspace
+               otp2.setText("");
+
+               otp1.requestFocus();
+               return true;
+           }
+           return false;
+       });
+
+        otp3.setOnKeyListener((view,keycode,event)->{
+            if(keycode== KeyEvent.KEYCODE_DEL) {
+                //this is for backspace
+                otp3.setText("");
+
+                otp2.requestFocus();
+                return true;
+            }
+            return false;
+        });
+        otp4.setOnKeyListener((view,keycode,event)->{
+            if(keycode== KeyEvent.KEYCODE_DEL) {
+                //this is for backspace
+                otp4.setText("");
+                otp3.requestFocus();
+                return true;
+            }
+            return false;
+        });
+
+
+
     }
 
     private void editTextSwitcher() {
