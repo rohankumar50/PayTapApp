@@ -38,29 +38,33 @@ import static com.vastgk.paytap.OTPVerify.USERID;
 
 public class Dashboard extends AppCompatActivity {
     CircularImageView profileImgView;
-    TextView tv_fullTransaction;
+    TextView balancetxtview,nametv;
     BottomNavigationView bottomNavigationView;
     public static int NFC_Request_code=7;
     private RecyclerView recentTransactions;
+    private  String mMobileNumber;
     ArrayList<TransactionsModel> transactionlist=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        SaveUserState();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         profileImgView = findViewById(R.id.ProfileImgView);
         profileImgView.setOnClickListener((v) -> {
             logout();
 
         });
+        mMobileNumber=getSharedPreferences(PREFERENCE_FILE_KEY,MODE_PRIVATE).getString(USERID,"null");
+        balancetxtview=findViewById(R.id.dashboard_balance);
         recentTransactions=findViewById(R.id.dashboard_recyclerView);
-
+        nametv=findViewById(R.id.dashboard_name);
 
         ((TextView)findViewById(R.id.dashboard_showTransactionHistory)).setOnClickListener(v->{
             Intent intent=new Intent(Dashboard.this,TransactionHistory.class);
             startActivity(intent);
         });
+    loadBalance();
 
         fetchrecentTransactions();
 
@@ -82,13 +86,43 @@ public class Dashboard extends AppCompatActivity {
                         Toast.makeText(Dashboard.this, "Scan", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.bottom_navigation_Dashboard_bank:
-                        Toast.makeText(Dashboard.this, "Bank", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Dashboard.this,AddMoney.class));
                         break;
                 }
                 return true;
             }
         });
 
+    }
+
+    private void loadBalance() {
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+        String url=String.format("http://api.nixbymedia.com/paytap/users_single.php?username=%s",mMobileNumber);
+        Log.d("DEBUGDASHBOARD", "loadBalance:url"+url);
+        StringRequest stringRequest=new StringRequest(Request.Method.GET,url,response -> {
+            try {
+                JSONObject jo=new JSONObject(response);
+                if (jo.has("user"))
+                {
+                    JSONArray ja=jo.getJSONArray("user");
+                    JSONObject jo1=ja.getJSONObject(0);
+                    nametv.setText(jo1.getString("name"));
+                    Log.d("DEBUGDASHBOARD", "loadBalance: "+jo1.toString());
+                    balancetxtview.setText(jo1.getString("amount"));
+                    Toast.makeText(this, "Balance Updated", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+        },error -> {
+            Toast.makeText(this, "Unable to Fetch Balance", Toast.LENGTH_SHORT).show();
+        });
+        requestQueue.add(stringRequest);
     }
 
     private void fetchrecentTransactions() {
@@ -102,6 +136,15 @@ public class Dashboard extends AppCompatActivity {
 
                 transactionlist.clear();
                 JSONObject jsonObject=new JSONObject(response);
+                if (jsonObject.has("error")){
+                if (jsonObject.getJSONArray("error").getJSONObject(0).getString("status").equals("404"))
+                {
+                    Toast.makeText(this, "No Transaction Exists", Toast.LENGTH_SHORT).show();
+                    TransactionsModel td=new TransactionsModel("No transaction Exits For this user ","","","","","");
+                    transactionlist.add(td);
+                    setRecentTransactions(transactionlist);
+                    return;
+                }}
                 JSONArray transactions=jsonObject.getJSONArray("transactions");
                 int limit=transactions.length()>3?3:transactions.length();
                 for (int i=0;i<=limit;i++)
@@ -139,13 +182,7 @@ public class Dashboard extends AppCompatActivity {
         recentTransactions.setAdapter(adapter);
     }
 
-    private void SaveUserState() {
-        SharedPreferences sharedPreferences=getSharedPreferences( PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putBoolean(IS_LOGGED_IN,true);
-        editor.putString(USERID,getIntent().getStringExtra("mobilenumber"));
-        editor.commit();
-    }
+
 
     private void logout() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFERENCE_FILE_KEY, MODE_PRIVATE);

@@ -1,5 +1,6 @@
 package com.vastgk.paytap;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,18 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TransactionsModel model=list.get(position);
-        holder.type.setText(model.getType());
-        holder.id.setText(model.getId());
-        holder.time.setText(model.getTime());
-        holder.amount.setText(model.getAmount());
+        holder.type.setText("Type: "+model.getType());
+        holder.id.setText("id:" +model.getId());
+        holder.time.setText("Date&Time: "+model.getTime());
+        holder.amount.setText("Amount:"+ model.getAmount());
+        if (model.getType().equals("credit")) {
+
+            holder.amount.setTextColor(Color.rgb(00,255,0));
+        }else
+        {
+            holder.amount.setTextColor(Color.rgb(255,0,0));
+
+        }
 
     }
 

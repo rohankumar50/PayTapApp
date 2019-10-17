@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }else
                     {
-                        Intent intent = new Intent(MainActivity.this, Dashboard.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("userid",sharedPreferences.getString(OTPVerify.USERID,"NO_MOBILENUMBER_IN_SHAREDPREFERENCE"));
-                        MainActivity.this.startActivity(intent);
-                        finish();
+                        Toast.makeText(this, ""+ sharedPreferences.getString(OTPVerify.USERID,"Null"), Toast.LENGTH_SHORT).show();;
+                        new Handler().postDelayed(()-> {Intent intent = new Intent(MainActivity.this, Dashboard.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("userid",sharedPreferences.getString(OTPVerify.USERID,"NO_MOBILENUMBER_IN_SHAREDPREFERENCE"));
+                            MainActivity.this.startActivity(intent);
+                            finish();},2000 );
+
                     }
 
 

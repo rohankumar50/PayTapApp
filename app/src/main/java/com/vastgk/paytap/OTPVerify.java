@@ -171,6 +171,8 @@ public class OTPVerify extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             //verification successful we will start the profile activity
+                            saveUserState();
+
                             Intent intent = new Intent(OTPVerify.this, Dashboard.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -192,6 +194,18 @@ public class OTPVerify extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void saveUserState() {
+
+            SharedPreferences sharedPreferences=getSharedPreferences( PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putBoolean(IS_LOGGED_IN,true);
+            editor.putString(USERID,getIntent().getStringExtra("mobilenumber"));
+            editor.commit();
+        Toast.makeText(this, "Loggin in"
+                +sharedPreferences.getString(USERID,"null@OTP"), Toast.LENGTH_SHORT).show();
+
     }
 
 
