@@ -32,7 +32,7 @@
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/transaction_cardView_paymentTime"
+        android:id="@+id/transaction_cardView_paymentType"
         android:text="paymentTime"
         android:textSize="20sp"/>
 
@@ -40,7 +40,7 @@
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/transaction_cardView_paymentType"
+        android:id="@+id/transaction_cardView_paymentTime"
         android:text="paymentType"
         android:textSize="20sp"/>
 
