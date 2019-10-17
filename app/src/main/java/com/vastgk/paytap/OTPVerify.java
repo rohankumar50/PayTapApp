@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -75,12 +76,16 @@ public class OTPVerify extends AppCompatActivity {
                 //so user has to manually enter the code
                 if (code != null) {
                     char [] codes=code.toCharArray();
-                    otp1.setText(codes[0]);
-                    otp2.setText(codes[1]);
-                    otp3.setText(codes[2]);
-                    otp4.setText(codes[3]);
-                    otp5.setText(codes[4]);
-                    otp6.setText(codes[5]);
+                    for (char s : codes)
+                        Log.d(TAG, "onVerificationCompleted: "+s);
+                    otp1.setText(String.valueOf(codes[0]));
+                    otp2.setText(String.valueOf(codes[1]));
+                    otp3.setText(String.valueOf(codes[2]));
+                    otp4.setText(String.valueOf(codes[3]));
+                    otp5.setText(String.valueOf(codes[4]));
+                    otp6.setText(String.valueOf(codes[5]));
+
+
                     //verifying the code
                     verifyVerificationCode(code);
                 }
