@@ -19,8 +19,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.skyfishjy.library.RippleBackground;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,11 +42,14 @@ public class NfcRead extends AppCompatActivity {
     private boolean writeMode;
     PendingIntent pendingIntent;
     Tag myTag;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_read);
+        username=getSharedPreferences(OTPVerify.PREFERENCE_FILE_KEY,MODE_PRIVATE).getString(OTPVerify.USERID,"null@nfcRead");
+
         startNfcAnimation(true);
         nfcReadnWrite();
     }
@@ -105,11 +115,61 @@ public class NfcRead extends AppCompatActivity {
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK,new Intent().putExtra(TAGDATA,text.toString()));
             startNfcAnimation(false);
+            sendTransactiontoServer(text);
         } catch (UnsupportedEncodingException e) {
             Log.e("UnsupportedEncoding", e.toString());
         }
 
         Log.d(TAG, "buildTagViews: "+text);
+    }
+
+    private void sendTransactiontoServer(String text) {
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        try {
+            JSONObject jo=new JSONObject(text);
+            String url=String.format("http://api.nixbymedia.com/paytap/transactions_add.php?username=%s&amount=%s&type=%s&vendorid=%s&itemid=%s",
+                    username,jo.getString("amount"),"debit",jo.getString("vendorid"),"Payment @ Mercent"
+
+            );
+            StringRequest stringRequest=new StringRequest(Request.Method.GET,url,response -> {
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    String res=jsonObject.getString("response");
+                    if (res.contains("Insufficient Balance."))
+                    {
+                        //fails to perform transaction
+                        Toast.makeText(this, "Payment Fails \nLow Money in wallet", Toast.LENGTH_SHORT).show();
+                    return;
+                    }else
+                    {
+                        Toast.makeText(this, "Transaction Successful", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } catch (JSONException e) {
+                    Toast.makeText(this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+
+            },error -> {
+                Toast.makeText(this, "Error Connecting to Server", Toast.LENGTH_SHORT).show();
+
+            });
+
+
+            requestQueue.add(stringRequest);
+
+
+        } catch (JSONException e) {
+            Log.d(TAG, "sendTransactiontoServer: "+e.getLocalizedMessage());
+            Toast.makeText(this, ""+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
 
