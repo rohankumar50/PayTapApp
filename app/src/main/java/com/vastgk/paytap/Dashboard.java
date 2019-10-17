@@ -70,7 +70,7 @@ public class Dashboard extends AppCompatActivity {
             startActivity(intent);
         });
     queue=Volley.newRequestQueue(this);
-        fetchrecentTransactions();
+
 
 
         // --------------------- Bottom Nanigation ---------------------------
@@ -192,7 +192,10 @@ fetchrecentTransactions();
     }
 
     private void setRecentTransactions(ArrayList<TransactionsModel> list) {
-        TransactionsAdapter adapter=new TransactionsAdapter(list, list.size());
+        int l=list.size()>2?2:list.size();
+
+
+        TransactionsAdapter adapter=new TransactionsAdapter(list, l);
         recentTransactions.setLayoutManager(new LinearLayoutManager(this));
         recentTransactions.setAdapter(adapter);
     }
