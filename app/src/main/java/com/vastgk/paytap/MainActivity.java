@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Intent intent = new Intent(MainActivity.this, OTPVerification.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("userid",sharedPreferences.getString(OTPVerify.USERID,"NO_MOBILENUMBER_IN_SHAREDPREFERENCE"))
                         MainActivity.this.startActivity(intent);
                         finish();
                     }
