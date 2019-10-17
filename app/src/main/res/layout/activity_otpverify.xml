@@ -47,6 +47,7 @@
             android:layout_height="50dp" />
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -54,33 +55,46 @@
             android:layout_marginTop="120dp">
 
             <EditText
+                android:id="@+id/OTP1"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#fff"
                 android:inputType="number"
+                android:maxLength="1"
                 android:gravity="center"
                 android:textColor="#fff"/>
             <EditText
+                android:id="@+id/OTP2"
                 android:layout_width="50dp"
+                android:nextFocusDown="@id/OTP1"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#fff"
                 android:inputType="number"
                 android:gravity="center"
+                android:maxLength="1"
                 android:textColor="#fff"/>
             <EditText
+                android:id="@+id/OTP3"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#fff"
+                android:nextFocusDown="@id/OTP2"
                 android:inputType="number"
                 android:gravity="center"
+                android:maxLength="1"
                 android:textColor="#fff"/>
+
             <EditText
+                android:id="@+id/OTP4"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:backgroundTint="#fff"
-                android:inputType="number"
                 android:gravity="center"
-                android:textColor="#fff"/>
+                android:nextFocusDown="@id/OTP3"
+                android:inputType="number"
+                android:maxLength="1"
+                android:imeOptions="actionDone"
+                android:textColor="#fff" />
 
         </LinearLayout>
 

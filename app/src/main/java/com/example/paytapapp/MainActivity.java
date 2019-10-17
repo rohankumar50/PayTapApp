@@ -13,12 +13,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this,OTPVerification.class);
-                startActivity(intent);
-            }
-        },2000);
+        new Handler().postDelayed(() -> {
+
+            Intent intent = new Intent(MainActivity.this, OTPVerification.class);
+            MainActivity.this.startActivity(intent);
+            finish();
+
+        },100);
+
     }
 }
