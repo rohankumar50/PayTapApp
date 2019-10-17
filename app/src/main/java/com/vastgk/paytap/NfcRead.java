@@ -13,15 +13,18 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.skyfishjy.library.RippleBackground;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Set;
 
 public class NfcRead extends AppCompatActivity {
 
@@ -49,6 +52,14 @@ public class NfcRead extends AppCompatActivity {
             // Stop here, we definitely need NFC
             Toast.makeText(this, "This device doesn't support NFC.", Toast.LENGTH_LONG).show();
             finish();
+        }else if (!nfcAdapter.isEnabled())
+        {
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.NFC_rootLayout), "Please Enable NFC", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Open Settings", (v) -> {
+                        new Intent(Settings.ACTION_NFC_SETTINGS);
+                    });
+            snackbar.show();
+            return;
         }
         readFromIntent(getIntent());
 

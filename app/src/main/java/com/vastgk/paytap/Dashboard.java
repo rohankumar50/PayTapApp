@@ -3,6 +3,8 @@ package com.vastgk.paytap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +24,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +41,8 @@ public class Dashboard extends AppCompatActivity {
     TextView tv_fullTransaction;
     BottomNavigationView bottomNavigationView;
     public static int NFC_Request_code=7;
-
+    private RecyclerView recentTransactions;
+    ArrayList<TransactionsModel> transactionlist=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,15 @@ public class Dashboard extends AppCompatActivity {
             logout();
 
         });
+        recentTransactions=findViewById(R.id.dashboard_recyclerView);
+
+
+        ((TextView)findViewById(R.id.dashboard_showTransactionHistory)).setOnClickListener(v->{
+            Intent intent=new Intent(Dashboard.this,TransactionHistory.class);
+            startActivity(intent);
+        });
+
+        fetchrecentTransactions();
 
         // --------------------- Bottom Nanigation ---------------------------
 
@@ -74,6 +89,54 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void fetchrecentTransactions() {
+        Toast.makeText(this, "Fetching Transactions", Toast.LENGTH_SHORT).show();
+        RequestQueue queue=Volley.newRequestQueue(this);
+        String url="http://api.nixbymedia.com/paytap/transactions_all.php?username=";
+        SharedPreferences sharedPreferences=getSharedPreferences(PREFERENCE_FILE_KEY,MODE_PRIVATE);
+        String mobile=sharedPreferences.getString(USERID,"null");
+        StringRequest request=new StringRequest(Request.Method.GET,url+mobile,response->{
+            try {
+
+                transactionlist.clear();
+                JSONObject jsonObject=new JSONObject(response);
+                JSONArray transactions=jsonObject.getJSONArray("transactions");
+                int limit=transactions.length()>3?3:transactions.length();
+                for (int i=0;i<=limit;i++)
+                {
+                    JSONObject jo=transactions.getJSONObject(i);
+                    TransactionsModel transaction=new TransactionsModel(jo.getString("id"),
+                            jo.getString("datetime"),jo.getString("amount"),jo.getString("type"),jo.getString("vendorid"),"PayTap"
+                            );
+                    transactionlist.add(transaction);
+                }
+
+                setRecentTransactions(transactionlist);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        },error -> {
+            Toast.makeText(this, "Can't Fetch Transactions", Toast.LENGTH_SHORT).show();
+            return;
+
+        });
+        queue.add(request);
+
+
+
+    }
+
+    private void setRecentTransactions(ArrayList<TransactionsModel> list) {
+        TransactionsAdapter adapter=new TransactionsAdapter(list);
+        recentTransactions.setLayoutManager(new LinearLayoutManager(this));
+        recentTransactions.setHasFixedSize(true);
+        recentTransactions.setAdapter(adapter);
     }
 
     private void SaveUserState() {
