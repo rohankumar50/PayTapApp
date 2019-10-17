@@ -164,11 +164,7 @@ public class OTPVerify extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            SharedPreferences sharedPreferences=OTPVerify.this.getSharedPreferences( PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor=sharedPreferences.edit();
-                            editor.putBoolean(IS_LOGGED_IN,true);
-                            editor.putString(USERID,mMobileNumber);
-                            editor.commit();
+
                             //verification successful we will start the profile activity
                             Intent intent = new Intent(OTPVerify.this, Dashboard.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

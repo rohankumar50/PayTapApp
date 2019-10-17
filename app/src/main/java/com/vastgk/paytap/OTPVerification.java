@@ -49,7 +49,7 @@ public class OTPVerification extends AppCompatActivity {
                             {
                                 Toast.makeText(OTPVerification.this, "User not found", Toast.LENGTH_SHORT).show();
                                     //Register the user
-                                    Intent intent=new Intent(OTPVerification.this, Dashboard.Registration.class);
+                                    Intent intent=new Intent(OTPVerification.this, Registration.class);
                                     intent.putExtra("mobilenumber",mobileNumber.getText().toString());
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
