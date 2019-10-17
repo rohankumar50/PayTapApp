@@ -143,11 +143,11 @@ public class Dashboard extends AppCompatActivity {
                     TransactionsModel td=new TransactionsModel("No transaction Exits For this user ","","","","","");
                     transactionlist.add(td);
                     setRecentTransactions(transactionlist);
-                    return;
+
                 }}
                 JSONArray transactions=jsonObject.getJSONArray("transactions");
                 int limit=transactions.length()>3?3:transactions.length();
-                for (int i=0;i<=limit;i++)
+                for (int i=0;i<limit;i++)
                 {
                     JSONObject jo=transactions.getJSONObject(i);
                     TransactionsModel transaction=new TransactionsModel(jo.getString("id"),

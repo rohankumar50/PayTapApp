@@ -35,8 +35,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         holder.time.setText("Date&Time: "+model.getTime());
         holder.amount.setText("Amount:"+ model.getAmount());
         if (model.getType().equals("credit")) {
-
-            holder.amount.setTextColor(Color.rgb(00,255,0));
+            holder.type.setTextColor(Color.rgb(00,100,0));
+            holder.amount.setTextColor(Color.rgb(00,100,0));
         }else
         {
             holder.amount.setTextColor(Color.rgb(255,0,0));
