@@ -1,4 +1,4 @@
-package com.example.paytapapp;
+package com.vastgk.paytap;
 
 import androidx.appcompat.app.AppCompatActivity;
 

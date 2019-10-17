@@ -1,4 +1,4 @@
-package com.example.paytapapp;
+package com.vastgk.paytap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -38,8 +36,9 @@ public class OTPVerification extends AppCompatActivity {
         btn_otpverifiction_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mobileNumber.getText().toString().isEmpty())
+                if (!mobileNumber.getText().toString().isEmpty() && mobileNumber.getText().toString().length()==10)
                 {
+                    btn_otpverifiction_login.setEnabled(false);
                     Log.d(TAG, "onClick: "+url);
                     StringRequest request=new StringRequest(Request.Method.GET,url+mobileNumber.getText().toString(),response -> {
                         try {
@@ -50,7 +49,7 @@ public class OTPVerification extends AppCompatActivity {
                             {
                                 Toast.makeText(OTPVerification.this, "User not found", Toast.LENGTH_SHORT).show();
                                     //Register the user
-                                    Intent intent=new Intent(OTPVerification.this,Registration.class);
+                                    Intent intent=new Intent(OTPVerification.this, Dashboard.Registration.class);
                                     intent.putExtra("mobilenumber",mobileNumber.getText().toString());
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
@@ -60,7 +59,7 @@ public class OTPVerification extends AppCompatActivity {
                             {
                                 Toast.makeText(OTPVerification.this, ""+jo.getJSONArray("user").toString(), Toast.LENGTH_SHORT).show();
                             //Send Otp to Login
-                                Intent intent=new Intent(OTPVerification.this,OTPVerify.class);
+                                Intent intent=new Intent(OTPVerification.this, OTPVerify.class);
                                 intent.putExtra("mobilenumber",mobileNumber.getText().toString());
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
@@ -75,13 +74,14 @@ public class OTPVerification extends AppCompatActivity {
 
                     },error -> {
                         Toast.makeText(OTPVerification.this, "Error Fetching request", Toast.LENGTH_SHORT).show();
-
+                btn_otpverifiction_login.setEnabled(true);
                     });
                     requestQueue.add(request);
 
                 }else
-                {
-                    mobileNumber.setError("Enter the mobile number");
+                {if (mobileNumber.getText().toString().length()<10)
+                    mobileNumber.setError("Enter all the digits of Mobile Number");
+
                 }
 
 

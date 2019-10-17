@@ -95,6 +95,28 @@
                 android:maxLength="1"
                 android:imeOptions="actionDone"
                 android:textColor="#fff" />
+            <EditText
+                android:id="@+id/OTP5"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:nextFocusDown="@id/OTP3"
+                android:inputType="number"
+                android:maxLength="1"
+                android:imeOptions="actionDone"
+                android:textColor="#fff" />
+            <EditText
+                android:id="@+id/OTP6"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="#fff"
+                android:gravity="center"
+                android:nextFocusDown="@id/OTP3"
+                android:inputType="number"
+                android:maxLength="1"
+                android:imeOptions="actionDone"
+                android:textColor="#fff" />
 
         </LinearLayout>
 
