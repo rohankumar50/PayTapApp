@@ -11,16 +11,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -42,7 +39,7 @@ public class OTPVerify extends AppCompatActivity {
     public static final String IS_LOGGED_IN="isloggedin";
     public static final String USERID="userid";
     private String mMobileNumber;
-
+    private TextView resendOtpbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +51,7 @@ public class OTPVerify extends AppCompatActivity {
         otp4=findViewById(R.id.OTP4);
         otp5=findViewById(R.id.OTP5);
         otp6=findViewById(R.id.OTP6);
+        resendOtpbtn=findViewById(R.id.OTPVERIFY_resend_otp);
         mMobileNumber=getIntent().getStringExtra("mobilenumber");
         editTextSwitcher();
         editTextBackSpaceListner();
@@ -154,7 +152,11 @@ public class OTPVerify extends AppCompatActivity {
 
         });
                // OnVerificationStateChangedCallbacks
+        resendOtpbtn.setOnClickListener(v->{
+            Toast.makeText(this, "Otp Resend To"+mMobileNumber, Toast.LENGTH_SHORT).show();
+            resendVerificationCode("+91"+mMobileNumber,mResendToken,mCallbacks);
 
+        });
     }
 
     private void verifyVerificationCode(String code) {
@@ -218,6 +220,16 @@ public class OTPVerify extends AppCompatActivity {
         Toast.makeText(this, "Loggin in"
                 +sharedPreferences.getString(USERID,"null@OTP"), Toast.LENGTH_SHORT).show();
 
+    }
+    private void resendVerificationCode(String phoneNumber,
+                                        PhoneAuthProvider.ForceResendingToken token, PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                mCallbacks,         // OnVerificationStateChangedCallbacks
+                token);             // ForceResendingToken from callbacks
     }
 
 

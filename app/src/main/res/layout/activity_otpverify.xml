@@ -136,6 +136,7 @@
             android:layout_height="wrap_content"
             android:text="Didn't get OTP ! Resend"
             android:gravity="center"
+            android:id="@+id/OTPVERIFY_resend_otp"
             android:layout_marginTop="20dp"
             android:textSize="14sp"
             android:textColor="#fff"/>
