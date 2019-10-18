@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((TextView)findViewById(R.id.main_versionInfo)).setText("version:"+BuildConfig.VERSION_NAME);
         SharedPreferences sharedPreferences=MainActivity.this.getSharedPreferences(OTPVerify.PREFERENCE_FILE_KEY, Context.MODE_PRIVATE);
         boolean isLoggedin=sharedPreferences.getBoolean(OTPVerify.IS_LOGGED_IN,false);
         Log.d(TAG, "onCreate: "+ (isLoggedin ?"true":"false"));

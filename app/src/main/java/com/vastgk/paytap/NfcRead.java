@@ -214,7 +214,7 @@ public class NfcRead extends AppCompatActivity {
 
 
                 } catch (JSONException e) {
-                    Toast.makeText(this, "" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error Connecting to Server"+e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                     finishAndRemoveTask();
                 }

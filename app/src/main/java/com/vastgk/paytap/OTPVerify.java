@@ -170,7 +170,7 @@ public class OTPVerify extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            Toast.makeText(this, "Something is wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Something is wrong \nTry Demo Account 9450645274 otp 123456", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "verifyVerificationCode: "+e.getLocalizedMessage() );
         }
 
