@@ -104,6 +104,7 @@ public class NfcRead extends AppCompatActivity {
             snackbar.show();
             return;
         }
+        paymentStatusTV.setText("Touch the NFC tag to Pay");
         readFromIntent(getIntent());
 
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -186,7 +187,6 @@ public class NfcRead extends AppCompatActivity {
                         }.start();
 
 
-                        Toast.makeText(this, "Payment Fails \nLow Money in wallet", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
                       // centerLogo.setImageResource(R.drawable.otp);
