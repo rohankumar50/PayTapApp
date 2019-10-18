@@ -27,8 +27,9 @@
             android:id="@+id/nfcRead_paymentStatusTV"
             android:layout_marginTop="30dp"/>
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:cropToPadding="true"
             android:layout_centerInParent="true"
             android:id="@+id/nfcread_centerImage"
             android:src="@drawable/logo"/>

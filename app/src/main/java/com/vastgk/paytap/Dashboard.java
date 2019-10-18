@@ -112,7 +112,6 @@ public class Dashboard extends AppCompatActivity {
                     nametv.setText(jo1.getString("name"));
                     Log.d("DEBUGDASHBOARD", "loadBalance: "+jo1.toString());
                     balancetxtview.setText(jo1.getString("amount"));
-                    Toast.makeText(this, "Balance Updated", Toast.LENGTH_SHORT).show();
                 }
 
             } catch (JSONException e) {
@@ -136,7 +135,6 @@ fetchrecentTransactions();
     }
 
     private void fetchrecentTransactions() {
-        Toast.makeText(this, "Fetching Transactions", Toast.LENGTH_SHORT).show();
         RequestQueue queue= Volley.newRequestQueue(this);
         String url="http://api.nixbymedia.com/paytap/transactions_all.php?username=";
         SharedPreferences sharedPreferences=getSharedPreferences(PREFERENCE_FILE_KEY,MODE_PRIVATE);
@@ -155,7 +153,6 @@ fetchrecentTransactions();
                         setRecentTransactions(transactionlist);
 
                     }}
-                Toast.makeText(this, "Loading Transactions", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "fetchrecentTransactions: Loading Transactions now");
                 JSONArray transactions=jsonObject.getJSONArray("transactions");
                 Log.d(TAG, "Jsonarray: "+transactions.length());

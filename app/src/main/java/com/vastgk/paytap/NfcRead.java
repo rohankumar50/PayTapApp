@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
@@ -14,6 +15,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.util.Log;
@@ -66,6 +68,7 @@ public class NfcRead extends AppCompatActivity {
 
         startNfcAnimation(true);
         nfcReadnWrite();
+
     }
 
     private void nfcReadnWrite() {
@@ -132,9 +135,7 @@ public class NfcRead extends AppCompatActivity {
         try {
             // Get the Text
             text = new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
-            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
             setResult(RESULT_OK, new Intent().putExtra(TAGDATA, text.toString()));
-            startNfcAnimation(false);
             sendTransactiontoServer(text);
         } catch (UnsupportedEncodingException e) {
             Log.e("UnsupportedEncoding", e.toString());
@@ -157,6 +158,7 @@ public class NfcRead extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String res = jsonObject.getString("response");
                     if (res.contains("Insufficient Balance.")) {
+                        paymentStatusTV.setTextColor(Color.rgb(100,0,0));
                         //fails to perform transaction
                         new CountDownTimer(5000, 1000) {
                             @Override
@@ -175,10 +177,11 @@ public class NfcRead extends AppCompatActivity {
                         Toast.makeText(this, "Payment Fails \nLow Money in wallet", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-                       centerLogo.setImageResource(R.drawable.payment_done);
+                      // centerLogo.setImageResource(R.drawable.otp);
+                        paymentStatusTV.setTextColor(Color.rgb(0,100,0));
                         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.completed);
                         mediaPlayer.start();
-                        new CountDownTimer(5000, 1000) {
+                        new CountDownTimer(8000, 1000) {
                             @Override
                             public void onTick(long millisUntilFinished) {
                                 try {
@@ -307,6 +310,7 @@ public class NfcRead extends AppCompatActivity {
 
     private void startNfcAnimation(boolean state) {
         final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.nfc_ripple_content);
+
         if (state)
             rippleBackground.startRippleAnimation();
         else rippleBackground.stopRippleAnimation();
