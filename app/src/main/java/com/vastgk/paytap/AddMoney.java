@@ -3,6 +3,7 @@ package com.vastgk.paytap;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +47,8 @@ String url="";
                         String rs=jo.getString("response");
                         if (rs.equals("Transaction Added"))
                         {
+                            MediaPlayer mediaPlayer=MediaPlayer.create(this,R.raw.payment_unlock);
+                            mediaPlayer.start();
                             Toast.makeText(this, "Amount Added Successfully", Toast.LENGTH_SHORT).show();
                             Intent intent=new Intent(AddMoney.this,Dashboard.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
