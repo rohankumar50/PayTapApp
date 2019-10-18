@@ -57,6 +57,7 @@ String url="";
                         }else
                         {
                             Toast.makeText(this, "Failed To load money", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
 
 
@@ -67,6 +68,7 @@ String url="";
 
                 },error -> {
                     Toast.makeText(this, "Failed To load money", Toast.LENGTH_SHORT).show();
+                    finish();
 
 
 
