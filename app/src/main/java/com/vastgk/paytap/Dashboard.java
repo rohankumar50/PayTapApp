@@ -124,7 +124,7 @@ amountet=findViewById(R.id.dashborad_amount_pay);
                     JSONObject jo1=ja.getJSONObject(0);
                     nametv.setText(jo1.getString("name"));
                     Log.d("DEBUGDASHBOARD", "loadBalance: "+jo1.toString());
-                    balancetxtview.setText(jo1.getString("amount"));
+                    balancetxtview.setText("\u20b9"+jo1.getString("amount"));
                 }
 
             } catch (JSONException e) {

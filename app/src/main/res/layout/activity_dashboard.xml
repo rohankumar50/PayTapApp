@@ -76,7 +76,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/font3"
                     android:id="@+id/dashboard_balance"
-                    android:text="Rs . 1000000"
+                    android:text="0"
                     android:textColor="#3f51b5"
                     android:textSize="50dp" />
 

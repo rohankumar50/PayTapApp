@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".AddMoney"></activity>
         <activity android:name=".NfcRead"
-            android:launchMode="singleInstance">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 

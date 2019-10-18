@@ -239,7 +239,7 @@ public class NfcRead extends AppCompatActivity {
 
     private void closeActivity(CountDownTimer countDownTimer) {
         countDownTimer.cancel();
-       finishAffinity();
+       finishAndRemoveTask();
     }
 
 
