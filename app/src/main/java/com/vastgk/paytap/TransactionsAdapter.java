@@ -39,7 +39,7 @@ limit=i;
             holder.type.setTextColor(Color.rgb(00,100,0));
             holder.amount.setTextColor(Color.rgb(00,100,0));
         }else
-        {            holder.type.setTextColor(Color.rgb(00,100,0));
+        {            holder.type.setTextColor(Color.rgb(255,0,0));
 
             holder.amount.setTextColor(Color.rgb(255,0,0));
 

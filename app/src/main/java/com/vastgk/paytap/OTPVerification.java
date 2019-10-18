@@ -57,7 +57,7 @@ public class OTPVerification extends AppCompatActivity {
 
                             }else if (jo.has("user"))
                             {
-                                Toast.makeText(OTPVerification.this, ""+jo.getJSONArray("user").toString(), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(OTPVerification.this, ""+jo.getJSONArray("user").toString(), Toast.LENGTH_SHORT).show();
                             //Send Otp to Login
                                 Intent intent=new Intent(OTPVerification.this, OTPVerify.class);
                                 intent.putExtra("mobilenumber",mobileNumber.getText().toString());

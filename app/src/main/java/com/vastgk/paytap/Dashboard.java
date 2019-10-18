@@ -87,9 +87,7 @@ public class Dashboard extends AppCompatActivity {
                         startActivityForResult(intent,NFC_Request_code);
 
                         break;
-                    case R.id.bottom_navigation_Dashboard_scan:
-                        Toast.makeText(Dashboard.this, "Scan", Toast.LENGTH_SHORT).show();
-                        break;
+
                     case R.id.bottom_navigation_Dashboard_bank:
                         startActivity(new Intent(Dashboard.this,AddMoney.class));
                         break;

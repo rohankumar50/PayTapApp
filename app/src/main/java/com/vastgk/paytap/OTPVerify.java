@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.StringRequest;
@@ -155,6 +156,7 @@ public class OTPVerify extends AppCompatActivity {
     }
 
     private void verifyVerificationCode(String code) {
+        Toast.makeText(this, "Verifying "+code, Toast.LENGTH_SHORT).show();
         //creating the credential
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
 
