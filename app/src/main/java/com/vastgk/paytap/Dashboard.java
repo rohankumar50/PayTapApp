@@ -100,7 +100,6 @@ amountet=findViewById(R.id.dashborad_amount_pay);
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottom_navigation_Dashboard_nfc:
-                        Toast.makeText(Dashboard.this, "NfC", Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(Dashboard.this,NfcRead.class);
                         startActivityForResult(intent,NFC_Request_code);
 
