@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +32,32 @@ public class OTPVerification extends AppCompatActivity {
         setContentView(R.layout.activity_otpverification);
         mobileNumber=findViewById(R.id.editxt_otp);
         btn_otpverifiction_login = findViewById(R.id.btn_otpverfication_login);
+        btn_otpverifiction_login.setEnabled(false);
         RequestQueue requestQueue= Volley.newRequestQueue(this);
+mobileNumber.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (count==10)
+        {
+            btn_otpverifiction_login.performClick();
+        }
+        if (count<10)
+            btn_otpverifiction_login.setEnabled(false);
+        else
+            btn_otpverifiction_login.setEnabled(true);
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+});
         btn_otpverifiction_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

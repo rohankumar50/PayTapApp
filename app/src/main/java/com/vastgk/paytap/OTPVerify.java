@@ -57,7 +57,7 @@ public class OTPVerify extends AppCompatActivity {
         mMobileNumber=getIntent().getStringExtra("mobilenumber");
         editTextSwitcher();
         editTextBackSpaceListner();
-
+    btn_otpverify.setEnabled(false);
         final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
@@ -286,7 +286,7 @@ public class OTPVerify extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(otp1.getText().toString().length()==1)     //size as per your requirement
-                {
+                {btn_otpverify.setEnabled(false);
                     otp2.requestFocus();
                 }
 
@@ -384,6 +384,7 @@ before=count;
                 if(otp4.getText().toString().length()==1)     //size as per your requirement
                 {
                     otp6.requestFocus();
+                    btn_otpverify.setEnabled(false);
                 }
                 if(before-count==1)     //size as per your requirement
                 {
@@ -405,8 +406,9 @@ before=count;
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 if(otp6.getText().toString().length()==1)     //size as per your requirement
-                {
+                {btn_otpverify.setEnabled(true);
                     btn_otpverify.performClick();
                 }
                 if(before-count==1)     //size as per your requirement
