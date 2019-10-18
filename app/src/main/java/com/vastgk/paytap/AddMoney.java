@@ -33,7 +33,7 @@ String url="";
 
         loadMoneybtn.setOnClickListener(v->{
             RequestQueue requestQueue= Volley.newRequestQueue(this);
-            if (!amount.getText().toString().isEmpty())
+            if (!amount.getText().toString().isEmpty()&& Integer.parseInt(amount.getText().toString())>0)
             {
                 url=String.format("http://api.nixbymedia.com/paytap/transactions_add.php?username=%s&amount=%s&type=%s&vendorid=%s&itemid=%s",
                         username,amount.getText().toString(),"credit","ven007","Load Money"

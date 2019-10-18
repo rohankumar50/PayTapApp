@@ -1,12 +1,5 @@
 package com.vastgk.paytap;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,9 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.vastgk.paytap.OTPVerify.IS_LOGGED_IN;
 import static com.vastgk.paytap.OTPVerify.PREFERENCE_FILE_KEY;
@@ -91,7 +87,7 @@ amountet=findViewById(R.id.dashborad_amount_pay);
 
 
 
-        // --------------------- Bottom Nanigation ---------------------------
+        // --------------------- Bottom Nanigation ---------------------------//
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             Intent intent;
