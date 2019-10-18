@@ -97,7 +97,6 @@ public class OTPVerify extends AppCompatActivity {
             public void onVerificationFailed(FirebaseException e) {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
-                Log.w(TAG, "onVerificationFailed", e);
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -108,7 +107,10 @@ public class OTPVerify extends AppCompatActivity {
                     Toast.makeText(OTPVerify.this, "Sms Quota Over", Toast.LENGTH_SHORT).show();
                     // ...
                 }
-
+                else
+                {
+                    Log.e(TAG, "onVerificationFailed: ",e );
+                }
                 // Show a message and update the UI
                 // ...
             }
@@ -158,15 +160,23 @@ public class OTPVerify extends AppCompatActivity {
     private void verifyVerificationCode(String code) {
         Toast.makeText(this, "Verifying "+code, Toast.LENGTH_SHORT).show();
         //creating the credential
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
 
-        //signing the user
-        signInWithPhoneAuthCredential(credential);
+            //signing the user
+            signInWithPhoneAuthCredential(credential);
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Something is wrong", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "verifyVerificationCode: "+e.getLocalizedMessage() );
+        }
+
     }
 
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        FirebaseAuth.getInstance().signInWithCredential(credential)
+     FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(OTPVerify.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -188,7 +198,7 @@ public class OTPVerify extends AppCompatActivity {
                             String message = "Somthing is wrong, we will fix it soon...";
 
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                message = "Invalid code entered...";
+                                message = "e code entered...";
                                 Toast.makeText(OTPVerify.this, message, Toast.LENGTH_SHORT).show();
                             }
 

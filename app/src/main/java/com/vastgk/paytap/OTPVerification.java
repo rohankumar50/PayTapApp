@@ -23,7 +23,6 @@ public class OTPVerification extends AppCompatActivity {
     private static final String TAG ="OTPDEBUG" ;
     String url="http://api.nixbymedia.com/paytap/users_single.php?username=";
     Button btn_otpverifiction_login;
-    TextView tv_otpverivication_registerhere;
     EditText mobileNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
