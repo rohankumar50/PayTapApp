@@ -78,7 +78,7 @@ public class NfcRead extends AppCompatActivity {
         if (nfcAdapter == null) {
             paymentStatusTV.setText("");
             // Stop here, we definitely need NFC
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.NFC_rootLayout), "This Device do not Support  NFC ", Snackbar.LENGTH_INDEFINITE)
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.NFC_rootLayout), "No NFC Support", Snackbar.LENGTH_INDEFINITE)
                     .setAction("close", (v) -> {
                         finish();
                     });
