@@ -39,7 +39,7 @@ import static com.vastgk.paytap.OTPVerify.USERID;
 
 public class Dashboard extends AppCompatActivity {
     RequestQueue queue;
-
+    EditText amountet;
     CircularImageView profileImgView;
     TextView balancetxtview,nametv;
     BottomNavigationView bottomNavigationView;
@@ -53,7 +53,7 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+amountet=findViewById(R.id.dashborad_amount_pay);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         profileImgView = findViewById(R.id.ProfileImgView);
         profileImgView.setOnClickListener((v) -> {
@@ -69,6 +69,24 @@ public class Dashboard extends AppCompatActivity {
             Intent intent=new Intent(Dashboard.this,TransactionHistory.class);
             startActivity(intent);
         });
+        ((Button)findViewById(R.id.dashboard_btn_pay)).setOnClickListener(v -> {
+
+
+            if (amountet.getText().toString().isEmpty())
+            {
+                amountet.setError("Enter amount ");
+                return;
+            }//TODO add Vendor ID and amount to pay
+            Intent intent=new Intent(Dashboard.this,NfcRead.class);
+            intent.putExtra("paydirect",true);
+            intent.putExtra("amount",amountet.getText().toString());
+            intent.putExtra("vendorid","ven007");
+            amountet.setText("");
+
+            startActivity(intent);
+
+        });
+
     queue=Volley.newRequestQueue(this);
 
 

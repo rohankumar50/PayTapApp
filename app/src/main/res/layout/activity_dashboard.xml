@@ -113,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="10dp"
+            android:id="@+id/dashborad_amount_pay"
             android:background="@drawable/edittext_background"
             android:hint="Enter Amount You Want To Pay"
             android:paddingStart="10dp"
@@ -122,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:id="@+id/dashboard_btn_pay"
             android:background="@drawable/button2"
             android:text="Pay"
             android:textColor="#fff" />

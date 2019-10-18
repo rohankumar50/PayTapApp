@@ -67,7 +67,18 @@ public class NfcRead extends AppCompatActivity {
         username = getSharedPreferences(OTPVerify.PREFERENCE_FILE_KEY, MODE_PRIVATE).getString(OTPVerify.USERID, "null@nfcRead");
 
         startNfcAnimation(true);
-        nfcReadnWrite();
+       boolean payFromotheractivity=getIntent().getBooleanExtra("paydirect",false);
+        if (payFromotheractivity)
+        {
+            String zz=String.format("{\"amount\":\"%s\",\"vendorid\":\"%s\"}",getIntent().getStringExtra("amount"),getIntent().getStringExtra("vendorid"));
+
+            sendTransactiontoServer(zz);
+
+        }else
+        {
+            nfcReadnWrite();
+
+        }
 
     }
 
@@ -145,6 +156,7 @@ public class NfcRead extends AppCompatActivity {
     }
 
     private void sendTransactiontoServer(String text) {
+        paymentStatusTV.setText("Contacting to Server");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         try {
             paymentStatusTV.setText("Processing Payment...");
