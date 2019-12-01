@@ -200,7 +200,7 @@ fetchrecentTransactions();
     }
 
     private void setRecentTransactions(ArrayList<TransactionsModel> list) {
-        int l=list.size()>2?2:list.size();
+        int l=list.size()>4?4:list.size();
 
 
         TransactionsAdapter adapter=new TransactionsAdapter(list, l);

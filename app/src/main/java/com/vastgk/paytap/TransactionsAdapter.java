@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,15 +32,16 @@ limit=i;
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TransactionsModel model=list.get(position);
-        holder.type.setText("Type: "+model.getType());
-        holder.id.setText("id:" +model.getId());
-        holder.time.setText("Date&Time: "+model.getTime());
-        holder.amount.setText("Amount:"+ model.getAmount());
+        holder.id.setText("ID: " +model.getId());
+        holder.time.setText(" "+model.getTime());
         if (model.getType().equals("credit")) {
-            holder.type.setTextColor(Color.rgb(00,100,0));
+            holder.type.setImageResource(R.drawable.ic_receive);
+            holder.amount.setText(" + \u20b9"+ model.getAmount());
+
             holder.amount.setTextColor(Color.rgb(00,100,0));
         }else
-        {            holder.type.setTextColor(Color.rgb(255,0,0));
+        {            holder.type.setImageResource(R.drawable.ic_sent);
+            holder.amount.setText(" - \u20b9"+ model.getAmount());
 
             holder.amount.setTextColor(Color.rgb(255,0,0));
 
@@ -53,7 +55,8 @@ limit=i;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView amount,time,id,type;
+        TextView amount,time,id;
+        ImageView type;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             amount=itemView.findViewById(R.id.transaction_cardView_paymentAmount);

@@ -1,5 +1,9 @@
 package com.vastgk.paytap;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TransactionsModel {
     private String id,time,amount,type,vendorid,vendorname;
 
@@ -21,7 +25,18 @@ public class TransactionsModel {
     }
 
     public String getTime() {
-        return time;
+try {
+
+   DateFormat original=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+   DateFormat newformat=new SimpleDateFormat("dd MMM yyyy hh:mm:ss a");
+Date date=original.parse(this.time);
+    time=newformat.format(date);
+
+
+}catch (Exception e) {
+    return time;
+}
+return time;
     }
 
     public void setTime(String time) {
