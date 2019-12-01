@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
         android:id="@+id/bottom_navigation_Dashboard_nfc"
         android:title="NFC"
         android:icon="@drawable/ic_nfc_24dp"/>
-    <item
-        android:id="@+id/bottom_navigation_Dashboard_scan"
-        android:title="Scan"
-        android:icon="@drawable/ic_scan_24dp"/>
+
 
     <item android:id="@+id/bottom_navigation_Dashboard_bank"
-        android:title="Bank"
+        android:title="Add"
         android:icon="@drawable/bank"/>
 </menu>

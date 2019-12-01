@@ -64,10 +64,13 @@
             android:padding="10dp">
 
             <EditText
+                android:id="@+id/editxt_otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#fff"
                 android:gravity="center"
+                android:imeOptions="actionDone"
+                android:maxLength="10"
                 android:hint="Enter Your Mobile Number"
                 android:inputType="number"
                 android:textColor="#fff"
@@ -79,26 +82,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/button"
-                android:text="Login"
+                android:text="Login/SignUp"
                 android:textColor="#3374BA"
                 android:layout_marginTop="20dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Do not have Acount ?"
-                android:textColor="#fff" />
 
-            <TextView
-                android:id="@+id/tv_otpverification_registerhere"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=" Register Here"
-                android:textColor="#fff"
-                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 

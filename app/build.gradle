@@ -3,11 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.example.paytapapp"
+        applicationId "com.vastgk.paytap"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -15,22 +15,50 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
     implementation 'androidx.cardview:cardview:1.0.0'
+
     implementation 'de.hdodenhof:circleimageview:1.0.0'
+    implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.mikhaellopez:circularimageview:4.0.2'
 
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
 }
+android.applicationVariants.all { variant ->
+    variant.outputs.all {
+        def appName = "PayTap"
+        outputFileName = appName + "-${variant.versionName}.apk"
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'

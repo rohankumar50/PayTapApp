@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/OTPVERIFY_ediText_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
@@ -73,17 +73,19 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/OTPVERIFY_mobileEditTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="14dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="8dp"
         android:hint="Mobile Number"
+        android:editable="false"
         android:textColorHint="#706E6E"
+        android:textColor="#d3d3d3"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/OTPVERIFY_ediText_Name"
         app:layout_constraintVertical_bias="0.048"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -98,6 +100,6 @@
         android:background="@drawable/button2"
         android:textColor="#fff"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/OTPVERIFY_mobileEditTxt"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
